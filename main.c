@@ -3,38 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/18 11:47:49 by jdoutor-         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:48:26 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-void	ft_mapinfo(char *buf, int file_len);
-int	ft_mapvalidation(char *buf, int file_len);
+void	ft_mapinfo(t_bsq *values);
+int	ft_mapvalidation(t_bsq *values);
 
+void	init_structure(t_bsq *values)
+{
+	values->empty = 0;
+	values->fd = 0;
+	values->obstacle = 0;
+	values->first_line = 0;
+	values->full = 0;
+	values->map = 0;
+	values->n_columns = 0;
+	values->n_lines = 0;
+	values->size = 0;
+	values->vmap_size = 0;
+} 
 int	main(int argc, char **argv)
 {
-	char	buf[100000];
 	int		fd;
-	int		file_len;
 	int		i;
-
+	t_bsq	*values;
 	i = 1;
+	fd = 0;
+	values = malloc(sizeof(t_bsq));
+	if (!values)
+		return (0);
+	init_structure(values);
 	if (argc > 1)
 	{
 		while (i <= argc - 1)
 		{
-			fd = open(argv[i], O_RDONLY);
-			file_len = read(fd, buf, 100000);
-			if (ft_mapvalidation(buf, file_len) == 0)
-				write(1, "map error\n", 10);
+			values->map = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+			if(!(values->fd = open(argv[i], O_RDONLY)))
+			{
+				close (values->fd);
+				write(2, "Error opening the file\n",23);
+				exit (0);
+			}
+			else if(!(values->size = read(values->fd, values->map, BUFFER_SIZE)))
+			{
+				write(2, "map error\n", 10);
+			}
 			else 
-				ft_mapinfo(buf, file_len);
+			{
+				if(!ft_mapvalidation(values))
+					write(2, "map error\n", 10);
+			}
+			//printf("%s", values->map);
 			i++;
 		}
-		printf("%s", buf);
+		close(values->fd);
 	}
+	free(values->map);
+	free(values);
+	return (0);
 }
