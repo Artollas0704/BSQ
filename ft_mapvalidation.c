@@ -3,24 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mapvalidation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:35:01 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/17 20:19:23 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:06:31 by jdoutor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-int	check_on_base(char *str, char c)
+int	check_on_base(char *str, char *c)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && i < 2)
+	while (str[i] && i < 3)
 	{
-		if (str[i] == c || c == '\n')
+		if ((str[i] == c[0] || c[0] == '\n') && c[0] != str[2])
 			return (1);
+		else if (c[0] == str[2])
+		{
+			c[0] = str[0];
+			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -66,6 +71,7 @@ int	character_validation(char *characters, char *buf)
 	int j;
 
 	i = 0;
+	
 	while(characters[i])
 	{
 		j = i + 1;
@@ -85,8 +91,9 @@ int	character_validation(char *characters, char *buf)
 	i++;
 	while (buf[i])
 	{
-		if(!(check_on_base(characters, buf[i])))
+		if(!(check_on_base(characters, &buf[i])))
 			return (0);
+		printf("%c", buf[i]);
 		i++;
 	}
 	return (1);

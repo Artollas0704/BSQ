@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/17 18:27:10 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:47:49 by jdoutor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	main(int argc, char **argv)
 			file_len = read(fd, buf, 100000);
 			if (ft_mapvalidation(buf, file_len) == 0)
 				write(1, "map error\n", 10);
+			else 
+				ft_mapinfo(buf, file_len);
 			i++;
 		}
+		printf("%s", buf);
 	}
 }
