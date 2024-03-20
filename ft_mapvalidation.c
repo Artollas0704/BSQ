@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_mapvalidation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:35:01 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 01:18:13 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:29:47 by jdoutor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	rows_validation(t_bsq *va)
 	j = va->first_line;
 	if (!rows_validation2(va, i, j, c))
 	{
-		printf("%d\n", va->n_lines);
 		return (0);
 	}
 	return (1);
@@ -115,25 +114,13 @@ int	ft_mapvalidation(t_bsq *va)
 		return (0);
 	va->first_line = i + 1;
 	if (!get_characters(va))
-	{
-		printf("a");
 		return (0);
-	}
 	ft_atoi(va);
 	if (va->n_lines == 0)
-	{
-		printf("b");
 		return (0);
-	}
 	if (!(rows_validation(va)))
-	{
-		printf("c");
 		return (0);
-	}
 	if (!character_validation(va))
-	{
-		printf("d");
 		return (0);
-	}
 	return (1);
 }

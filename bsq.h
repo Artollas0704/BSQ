@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bsq.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:19:18 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 03:19:58 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:26:46 by jdoutor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ typedef struct bsq
 	int		max_y;
 	int		max_square;
 	int		**bsq_ints;
+	int		x;
+	int		y;
 }	t_bsq;
 
-int	ft_checks(t_bsq *va, char *argv);
+int		ft_checks(t_bsq *va, char *argv);
 void	ft_mapinfo(t_bsq *va);
 int		ft_mapvalidation(t_bsq *va);
 char	*ft_strcat(char *dest, char *src);
@@ -51,6 +53,12 @@ void	ft_allocate(t_bsq *va);
 void	ft_endbsq(t_bsq *va);
 void	ft_free_ints(t_bsq *va);
 void	ft_free_chars(t_bsq *va);
+int		check_diagonal(t_bsq *va);
+int		check_bottom(t_bsq *va);
+int		check_right(t_bsq *va);
+void	equal_zero(t_bsq *va);
+int		diff_zero(t_bsq *va);
+
 #endif
 
 /* typedef struct bsq

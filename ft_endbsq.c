@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endbsq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:37 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 02:16:03 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:28:55 by jdoutor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	ft_endbsq(t_bsq *va)
 {
-	int x;
+	int	x;
 	int	y;
 	int	i;
-	int j;
+	int	j;
 
-	
 	i = 0;
 	y = va->max_y;
 	while (i < va->max_square)
@@ -35,11 +34,10 @@ void	ft_endbsq(t_bsq *va)
 		y++;
 		i++;
 	}
-	
 	i = 0;
-	while(i < va->n_lines)
+	while (i < va->n_lines)
 	{
-			printf("%s\n", va->bsq[i]);
+		printf("%s\n", va->bsq[i]);
 		i++;
 	}
 	ft_free_chars(va);
