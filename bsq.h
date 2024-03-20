@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:19:18 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 17:08:36 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:24:31 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		ft_checks(t_bsq *va, char *argv);
 void	ft_mapinfo(t_bsq *va);
 int		ft_mapvalidation(t_bsq *va);
 char	*ft_strcat(char *dest, char *src);
-void	ft_put0(char *str);
 void	ft_atoi(t_bsq *va);
 int		ft_strlen(char *str);
 void	ft_bsq(t_bsq *va);
