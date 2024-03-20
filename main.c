@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 17:05:51 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:50:16 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ int	ft_openfile(t_bsq *va, char *argv)
 
 int	ft_stdi(t_bsq *va)
 {
-	va->str = (char *)malloc((va->buffer_size + 1) * sizeof(char));
 	va->map = (char *)malloc(sizeof(char));
+	if (!(va->map))
+		return (0);
 	va->map[0] = '\0';
 	while ((va->size > 0))
 	{
+		ft_realloc(va);
 		va->size = read(0, va->str, va->buffer_size);
 		va->str[va->size] = '\0';
 		va->map = ft_strcat(va->map, va->str);
-		ft_realloc(va);
 	}
 	if (!ft_mapvalidation(va))
 	{
@@ -47,26 +48,25 @@ int	ft_stdi(t_bsq *va)
 int	ft_checks(t_bsq *va, char *argv)
 {
 	va->map = (char *)malloc(sizeof(char));
+	if (!va->map)
+		return (0);
 	va->map[0] = '\0';
-	if (!ft_openfile(va, argv))
+	if (ft_opencheck(va, argv))
 	{
-		close(va->fd);
-		write(2, "map error\n", 10);
-		return (0);
-	}
-	while ((va->size > 0))
-	{
-		ft_realloc(va);
-		va->size = read(va->fd, va->str, va->buffer_size);
-		va->str[va->size] = '\0';
-		va->map = ft_strcat(va->map, va->str);
-	}
-	if (!ft_mapvalidation(va))
-	{
-		free(va->str);
-		free(va->map);
-		write(2, "map error\n", 10);
-		return (0);
+		while ((va->size > 0))
+		{
+			ft_realloc(va);
+			va->size = read(va->fd, va->str, va->buffer_size);
+			va->str[va->size] = '\0';
+			va->map = ft_strcat(va->map, va->str);
+		}
+		if (!ft_mapvalidation(va))
+		{
+			free(va->str);
+			free(va->map);
+			write(2, "map error\n", 10);
+			return (0);
+		}
 	}
 	close(va->fd);
 	free(va->str);

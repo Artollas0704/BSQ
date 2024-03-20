@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:37 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 17:08:44 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:50:26 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ void	ft_print_square(t_bsq *va)
 		write(1, "\n", 1);
 		y++;
 	}
+}
+
+int	ft_opencheck(t_bsq *va, char *argv)
+{
+	if (!ft_openfile(va, argv))
+	{
+		close(va->fd);
+		write(2, "map error\n", 10);
+		return (0);
+	}
+	return (1);
 }
 
 void	ft_endbsq(t_bsq *va)

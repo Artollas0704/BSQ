@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:34:46 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 17:08:13 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:51:10 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_realloc(t_bsq *va)
 		va->buffer_size *= 2;
 	free(va->str);
 	va->str = (char *)malloc(va->buffer_size + 1 * sizeof(char));
+	if (!va->str)
+		return ;
 }
 
 void	ft_allocate(t_bsq *va)

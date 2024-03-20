@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:19:18 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 17:24:31 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:52:27 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int		check_right(t_bsq *va);
 void	equal_zero(t_bsq *va);
 int		diff_zero(t_bsq *va);
 void	ft_realloc(t_bsq *va);
+int		ft_opencheck(t_bsq *va, char *argv);
+int		ft_openfile(t_bsq *va, char *argv);
 
 #endif
 
