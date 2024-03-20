@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:19:18 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/18 22:54:05 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:19:58 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,43 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# define BUFFER_SIZE 10000000000
+# define BUFFER_SIZE 50
 
 typedef struct bsq
+{
+	char	empty;
+	char	obstacle;
+	char	full;
+	char	*map;
+	int		size;
+	int		fd;
+	int		first_line;
+	int		n_lines;
+	int		n_columns;
+	int		vmap_size;
+	char	*str;
+	char	**bsq;
+	int		max_x;
+	int		max_y;
+	int		max_square;
+	int		**bsq_ints;
+}	t_bsq;
+
+int	ft_checks(t_bsq *va, char *argv);
+void	ft_mapinfo(t_bsq *va);
+int		ft_mapvalidation(t_bsq *va);
+char	*ft_strcat(char *dest, char *src);
+void	ft_put0(char *str);
+void	ft_atoi(t_bsq *va);
+int		ft_strlen(char *str);
+void	ft_bsq(t_bsq *va);
+void	ft_allocate(t_bsq *va);
+void	ft_endbsq(t_bsq *va);
+void	ft_free_ints(t_bsq *va);
+void	ft_free_chars(t_bsq *va);
+#endif
+
+/* typedef struct bsq
 {
 	char 	empty; // Empty character
 	char 	obstacle; // Obstacle Character
@@ -31,6 +65,5 @@ typedef struct bsq
 	int		n_lines; // Number of lines from the first line (ft_atoi)
 	int		n_columns; // Number of columns
 	int		vmap_size; // Valid size of the map (even if there is stuff after it)
-} t_bsq;
-
-#endif
+	char	*str;
+}	t_bsq; */

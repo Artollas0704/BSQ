@@ -6,110 +6,134 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:35:01 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/18 23:04:14 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 01:18:13 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-int	ft_atoi(t_bsq *values);
-int	ft_strlen(char *str);
-
-int	rows_validation(t_bsq *values)
+int	rows_validation2(t_bsq *va, int i, int j, int c)
 {
-	int	i;
-	int	j;
-	int c;
 	int	lines;
 
 	lines = 0;
-	ft_atoi(values);
-	if (values->n_lines == 0)
-		return (0);
-	c = 0;
-	i = values->first_line;
-	j = values->first_line;
-	while (values->map[i])
+	while (va->map[i])
 	{
-		if(values->map[i] == '\n' && lines < values->n_lines)
+		if (va->map[i] == '\n' && lines < va->n_lines)
 		{
 			lines++;
-			if(c == 0)
+			if (c == 0)
 				c = i - j;
 			if (c != i - j)
 				return (0);
-			if (lines == values->n_lines)
-				break;
+			if (lines == va->n_lines)
+				break ;
 			j = i + 1;
 		}
-		if(values->map[i])
+		if (va->map[i])
 			i++;
 	}
-	if (values->map[i + 1] != 0 || lines != values->n_lines)
+	if (va->map[i + 1] != 0 || lines != va->n_lines)
 		return (0);
-	values->vmap_size = i;
-	return(1);
+	va->n_columns = c;
+	va->vmap_size = i;
+	return (1);
 }
 
-int	character_validation(t_bsq *values)
+int	rows_validation(t_bsq *va)
+{
+	int	i;
+	int	j;
+	int	c;
+
+	c = 0;
+	i = va->first_line;
+	j = va->first_line;
+	if (!rows_validation2(va, i, j, c))
+	{
+		printf("%d\n", va->n_lines);
+		return (0);
+	}
+	return (1);
+}
+
+int	character_validation(t_bsq *va)
 {
 	int	i;
 
 	i = 0;
-	if (values->full < 32 || values->full == 127 || values->empty < 32 
-		|| values->empty == 127 || values->obstacle < 32 
-		|| values->obstacle == 127)
+	if (va->full < 32 || va->full == 127 || va->empty < 32 
+		|| va->empty == 127 || va->obstacle < 32 
+		|| va->obstacle == 127)
 		return (0);
-	if (values->full == values->empty || values->full == values->obstacle 
-		|| values->obstacle == values->empty)
+	if (va->full == va->empty || va->full == va->obstacle 
+		|| va->obstacle == va->empty)
 		return (0);
-	while (values->map[i] != '\n')
+	while (va->map[i] != '\n')
 		i++;
-	while (values->map[i] && i <= values->vmap_size)
+	while (va->map[i] && i <= va->vmap_size)
 	{
-		if (values->map[i] != values->empty 
-			&& values->map[i] != values->obstacle && values->map[i] != '\n')
+		if (va->map[i] != va->empty 
+			&& va->map[i] != va->obstacle && va->map[i] != '\n')
 			return (0);
 		i++;
 	}
 	return (1);
 }
-int		get_characters(t_bsq *values)
+
+int	get_characters(t_bsq *va)
 {
 	int	i;
 
 	i = 0;
-	while(values->map[i] != '\n')
+	while (va->map[i] != '\n')
 		i++;
-	values->full = values->map[i - 1];
-	values->obstacle = values->map[i - 2];
-	values->empty = values->map[i - 3];
-	if (values->map[i + 1] != values->obstacle && values->map[i + 1] != values->empty)
+	va->full = va->map[i - 1];
+	va->obstacle = va->map[i - 2];
+	va->empty = va->map[i - 3];
+	if (va->map[i + 1] != va->obstacle 
+		&& va->map[i + 1] != va->empty)
 		return (0);
 	i = i - 4;
-	while(i >= 0)
+	while (i >= 0)
 	{
-		if (!(values->map[i] >= '0' && values->map[i] <= '9'))
+		if (!(va->map[i] >= '0' && va->map[i] <= '9'))
 			return (0);
 		i--;
 	}
 	return (1);
 }
-int	ft_mapvalidation(t_bsq *values)
+
+int	ft_mapvalidation(t_bsq *va)
 {
 	int	i;
 
 	i = 0;
-	while (values->map[i] != '\n' && values->map[i] != 0)
+	while (va->map[i] != '\n' && va->map[i] != 0)
 		i++;
-	if (values->map[i] != '\n')
+	if (va->map[i] != '\n')
 		return (0);
-	values->first_line = i + 1;
-	if (!get_characters(values))
+	va->first_line = i + 1;
+	if (!get_characters(va))
+	{
+		printf("a");
 		return (0);
-	if (!(rows_validation(values)))
+	}
+	ft_atoi(va);
+	if (va->n_lines == 0)
+	{
+		printf("b");
 		return (0);
-	if (!character_validation(values))
+	}
+	if (!(rows_validation(va)))
+	{
+		printf("c");
 		return (0);
+	}
+	if (!character_validation(va))
+	{
+		printf("d");
+		return (0);
+	}
 	return (1);
 }

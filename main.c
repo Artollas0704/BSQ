@@ -6,65 +6,114 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/18 21:48:26 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:42:27 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-void	ft_mapinfo(t_bsq *values);
-int	ft_mapvalidation(t_bsq *values);
-
-void	init_structure(t_bsq *values)
+int	ft_openfile(t_bsq *va, char *argv)
 {
-	values->empty = 0;
-	values->fd = 0;
-	values->obstacle = 0;
-	values->first_line = 0;
-	values->full = 0;
-	values->map = 0;
-	values->n_columns = 0;
-	values->n_lines = 0;
-	values->size = 0;
-	values->vmap_size = 0;
-} 
+	va->fd = open(argv, O_RDONLY);
+	if (va->fd < 0)
+	{
+		close (va->fd);
+		return (0);
+	}
+	return (1);
+}
+
+int	ft_stdi(t_bsq *va)
+{
+	va->str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	va->map = (char *)malloc(sizeof(char));
+	va->map[0] = '\0';
+	while (va->size >= 0)
+	{
+		va->size = read(0, va->str, BUFFER_SIZE);
+		va->str[va->size] = '\0';
+		va->map = ft_strcat(va->map, va->str);
+	}
+	if (!ft_mapvalidation(va))
+	{
+		write(2, "map error\n", 10);
+		return (0);
+	}
+	return (1);
+}
+
+int	ft_checks(t_bsq *va, char *argv)
+{
+	va->str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	va->map = (char *)malloc(sizeof(char));
+	va->map[0] = '\0';
+	if (!ft_openfile(va, argv))
+	{
+		close(va->fd);
+		write(2, "Error opening the file\n", 23);
+		return (0);
+	}
+	while ((va->size > 0))
+	{
+		va->size = read(va->fd, va->str, BUFFER_SIZE);
+		va->str[va->size] = '\0';
+		va->map = ft_strcat(va->map, va->str);
+	}
+	if (!ft_mapvalidation(va))
+	{
+		write(2, "map error\n", 10);
+		return (0);
+	}
+	close(va->fd);
+	free(va->str);
+	return (1);
+}
+
+void	init_structure(t_bsq *va)
+{
+	va->empty = 0;
+	va->fd = 0;
+	va->obstacle = 0;
+	va->first_line = 0;
+	va->full = 0;
+	va->map = 0;
+	va->n_columns = 0;
+	va->n_lines = 0;
+	va->size = 1;
+	va->vmap_size = 0;
+	va->str = 0;
+	va->bsq = 0;
+	va->bsq_ints = 0;
+	va->max_square = 0;
+	va->max_x = 0;
+	va->max_y = 0;
+}
+
 int	main(int argc, char **argv)
 {
-	int		fd;
 	int		i;
-	t_bsq	*values;
+	t_bsq	*va;
+
 	i = 1;
-	fd = 0;
-	values = malloc(sizeof(t_bsq));
-	if (!values)
+	va = malloc(sizeof(t_bsq));
+	if (!va)
 		return (0);
-	init_structure(values);
 	if (argc > 1)
 	{
 		while (i <= argc - 1)
 		{
-			values->map = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-			if(!(values->fd = open(argv[i], O_RDONLY)))
-			{
-				close (values->fd);
-				write(2, "Error opening the file\n",23);
-				exit (0);
-			}
-			else if(!(values->size = read(values->fd, values->map, BUFFER_SIZE)))
-			{
-				write(2, "map error\n", 10);
-			}
-			else 
-			{
-				if(!ft_mapvalidation(values))
-					write(2, "map error\n", 10);
-			}
-			//printf("%s", values->map);
+			init_structure(va);
+			if (ft_checks(va, argv[i]))
+				ft_bsq(va);
 			i++;
 		}
-		close(values->fd);
 	}
-	free(values->map);
-	free(values);
+	else
+	{
+		init_structure(va);
+		if(ft_stdi(va))
+			ft_bsq(va);
+	}
+	free(va);
 	return (0);
 }

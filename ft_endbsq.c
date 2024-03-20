@@ -1,25 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_endbsq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 16:15:35 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/19 20:22:35 by aralves-         ###   ########.fr       */
+/*   Created: 2024/03/19 22:58:37 by aralves-          #+#    #+#             */
+/*   Updated: 2024/03/20 02:16:03 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
 
-void	ft_atoi(t_bsq *va)
+void	ft_endbsq(t_bsq *va)
 {
+	int x;
+	int	y;
 	int	i;
+	int j;
 
+	
 	i = 0;
-	while ((va->map[i] >= '0' && va->map[i] <= '9') && i < (va->first_line - 4))
+	y = va->max_y;
+	while (i < va->max_square)
 	{
-		va->n_lines = va->n_lines * 10 + va->map[i] - 48;
+		j = 0;
+		x = va->max_x;
+		while (j < va->max_square)
+		{
+			va->bsq[y][x] = va->full;
+			x++;
+			j++;
+		}
+		y++;
 		i++;
 	}
+	
+	i = 0;
+	while(i < va->n_lines)
+	{
+			printf("%s\n", va->bsq[i]);
+		i++;
+	}
+	ft_free_chars(va);
+	free(va->bsq);
 }
