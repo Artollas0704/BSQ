@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bsq.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:23:48 by jdoutor-          #+#    #+#             */
-/*   Updated: 2024/03/20 15:24:19 by jdoutor-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:07:22 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+
+void	ft_newline(int argc, int i)
+{
+	if (i < argc - 1)
+		write(1, "\n", 1);
+}
 
 void	ft_fillmap(t_bsq *va)
 {

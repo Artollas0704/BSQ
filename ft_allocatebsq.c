@@ -6,11 +6,19 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 21:34:46 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/19 23:39:05 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:08:13 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+
+void	ft_realloc(t_bsq *va)
+{
+	if (va->size != 0 && va->size == va->buffer_size)
+		va->buffer_size *= 2;
+	free(va->str);
+	va->str = (char *)malloc(va->buffer_size + 1 * sizeof(char));
+}
 
 void	ft_allocate(t_bsq *va)
 {

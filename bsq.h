@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bsq.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:19:18 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 15:26:46 by jdoutor-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:08:36 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,31 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# define BUFFER_SIZE 50
 
 typedef struct bsq
 {
-	char	empty;
-	char	obstacle;
-	char	full;
-	char	*map;
-	int		size;
-	int		fd;
-	int		first_line;
-	int		n_lines;
-	int		n_columns;
-	int		vmap_size;
-	char	*str;
-	char	**bsq;
-	int		max_x;
-	int		max_y;
-	int		max_square;
-	int		**bsq_ints;
-	int		x;
-	int		y;
+	char			empty;
+	char			obstacle;
+	char			full;
+	char			*map;
+	unsigned int	size;
+	int				fd;
+	int				first_line;
+	int				n_lines;
+	int				n_columns;
+	int				vmap_size;
+	char			*str;
+	char			**bsq;
+	int				max_x;
+	int				max_y;
+	int				max_square;
+	int				**bsq_ints;
+	int				x;
+	int				y;
+	unsigned int	buffer_size;
 }	t_bsq;
 
+void	ft_newline(int argc, int i);
 int		ft_checks(t_bsq *va, char *argv);
 void	ft_mapinfo(t_bsq *va);
 int		ft_mapvalidation(t_bsq *va);
@@ -58,6 +59,7 @@ int		check_bottom(t_bsq *va);
 int		check_right(t_bsq *va);
 void	equal_zero(t_bsq *va);
 int		diff_zero(t_bsq *va);
+void	ft_realloc(t_bsq *va);
 
 #endif
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 15:30:00 by jdoutor-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:05:51 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,42 +25,46 @@ int	ft_openfile(t_bsq *va, char *argv)
 
 int	ft_stdi(t_bsq *va)
 {
-	va->str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	va->str = (char *)malloc((va->buffer_size + 1) * sizeof(char));
 	va->map = (char *)malloc(sizeof(char));
 	va->map[0] = '\0';
-	while (va->size > 0)
+	while ((va->size > 0))
 	{
-		va->size = read(0, va->str, BUFFER_SIZE);
+		va->size = read(0, va->str, va->buffer_size);
 		va->str[va->size] = '\0';
 		va->map = ft_strcat(va->map, va->str);
+		ft_realloc(va);
 	}
 	if (!ft_mapvalidation(va))
 	{
 		write(2, "map error\n", 10);
 		return (0);
 	}
+	free(va->str);
 	return (1);
 }
 
 int	ft_checks(t_bsq *va, char *argv)
 {
-	va->str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	va->map = (char *)malloc(sizeof(char));
 	va->map[0] = '\0';
 	if (!ft_openfile(va, argv))
 	{
 		close(va->fd);
-		write(2, "Error opening the file\n", 23);
+		write(2, "map error\n", 10);
 		return (0);
 	}
 	while ((va->size > 0))
 	{
-		va->size = read(va->fd, va->str, BUFFER_SIZE);
+		ft_realloc(va);
+		va->size = read(va->fd, va->str, va->buffer_size);
 		va->str[va->size] = '\0';
 		va->map = ft_strcat(va->map, va->str);
 	}
 	if (!ft_mapvalidation(va))
 	{
+		free(va->str);
+		free(va->map);
 		write(2, "map error\n", 10);
 		return (0);
 	}
@@ -87,6 +91,9 @@ void	init_structure(t_bsq *va)
 	va->max_square = 0;
 	va->max_x = 0;
 	va->max_y = 0;
+	va->y = 0;
+	va->x = 0;
+	va->buffer_size = 50;
 }
 
 int	main(int argc, char **argv)
@@ -105,7 +112,7 @@ int	main(int argc, char **argv)
 			init_structure(va);
 			if (ft_checks(va, argv[i]))
 				ft_bsq(va);
-			i++;
+			ft_newline(argc, i++);
 		}
 	}
 	else

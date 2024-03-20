@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_endbsq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdoutor- <jdoutor-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 22:58:37 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 15:28:55 by jdoutor-         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:08:44 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+
+void	ft_print_square(t_bsq *va)
+{
+	int	y;
+
+	y = 0;
+	while (y < va->n_lines)
+	{
+		write(1, va->bsq[y], va->n_columns);
+		write(1, "\n", 1);
+		y++;
+	}
+}
 
 void	ft_endbsq(t_bsq *va)
 {
@@ -34,12 +47,7 @@ void	ft_endbsq(t_bsq *va)
 		y++;
 		i++;
 	}
-	i = 0;
-	while (i < va->n_lines)
-	{
-		printf("%s\n", va->bsq[i]);
-		i++;
-	}
+	ft_print_square(va);
 	ft_free_chars(va);
 	free(va->bsq);
 }
