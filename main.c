@@ -6,7 +6,7 @@
 /*   By: aralves- <aralves-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:52:45 by aralves-          #+#    #+#             */
-/*   Updated: 2024/03/20 03:42:27 by aralves-         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:44:04 by aralves-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_stdi(t_bsq *va)
 	va->str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	va->map = (char *)malloc(sizeof(char));
 	va->map[0] = '\0';
-	while (va->size >= 0)
+	while (va->size > 0)
 	{
 		va->size = read(0, va->str, BUFFER_SIZE);
 		va->str[va->size] = '\0';
